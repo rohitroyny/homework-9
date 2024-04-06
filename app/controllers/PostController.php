@@ -41,34 +41,37 @@ class PostController
     }
 
     public function getPosts($id) {
+        $postModel = new Post(); 
         header("Content-Type: application/json");
         if ($id) {
             //TODO 5-c i: get a post data by id
+            $posts = $postModel->getPostById($id); 
         } else {
             //TODO 5-a: get all posts
+            $posts = $postModel->getAllPosts(); 
         }
 
+        echo json_encode($posts);
         exit();
     }
 
-    public function savePost() {
-        $inputData = [
-            'title' => $_POST['title'] ? $_POST['title'] : false,
-            'description' => $_POST['description'] ? $_POST['description'] : false,
+@@ -58,8 +59,13 @@ public function savePost() {
         ];
         $postData = $this->validatePost($inputData);
 
         //TODO 5-b: save a post
 
+        $post = new Post(); 
+        $post->savePost(
+            [
+                'title' => $postData['title'],
+                'description' => $postData['description'],
+            ]
+        );
         http_response_code(200);
         echo json_encode([
             'success' => true
-        ]);
-        exit();
-    }
-
-    public function updatePost($id) {
-        if (!$id) {
+@@ -72,7 +78,6 @@ public function updatePost($id) {
             http_response_code(404);
             exit();
         }
@@ -76,55 +79,40 @@ class PostController
         //no built-in super global for PUT
         parse_str(file_get_contents('php://input'), $_PUT);
 
-        $inputData = [
-            'title' => $_PUT['title'] ? $_PUT['title'] : false,
-            'description' => $_PUT['description'] ? $_PUT['description'] : false,
-        ];
+@@ -83,6 +88,14 @@ public function updatePost($id) {
         $postData = $this->validatePost($inputData);
 
         //TODO 5-c: update a post
+        $post = new Post();
+        $post->updatePost(
+            [
+                'id' => $id, 
+                'title' => $postData['title'],
+                'description' => $postData['description'],
+            ]
+        );
 
         http_response_code(200);
         echo json_encode([
-            'success' => true
-        ]);
-        exit();
-    }
-
-    public function deletePost($id) {
-        if (!$id) {
-            http_response_code(404);
-            exit();
+@@ -98,6 +111,12 @@ public function deletePost($id) {
         }
 
         //TODO 5-d: delete a post
+        $post = new Post();
+        $post->deletePost(
+            [
+                'id' => $id,
+            ]
+        );
 
         http_response_code(200);
         echo json_encode([
-            'success' => true
-        ]);
-        exit();
-    }
-
-    public function postsView() {
-        include '../public/assets/views/post/posts-view.html';
-        exit();
-    }
-
-    public function postsAddView() {
-        include '../public/assets/views/post/posts-add.html';
-        exit();
-    }
-
-    public function postsDeleteView() {
-        include '../public/assets/views/post/posts-delete.html';
+@@ -121,7 +140,7 @@ public function postsDeleteView() {
         exit();
     }
 
     public function postsUpdateView() {
+    public function postsUpdateView() { 
         include '../public/assets/views/post/posts-update.html';
         exit();
     }
-
-
-}
