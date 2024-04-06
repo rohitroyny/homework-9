@@ -1,0 +1,18 @@
+Rohit Roy
+April 8th, 2024
+Internet and Web Programming (CISC-3300-R01)
+Fordham University
+
+
+1. SQL stands for Structured Query Language. It is a standardized programming language that is used to manage and manipulate relational databases. SQL provides a system for defining, updating, retrieving, and managing data in a relational database. It's used for tasks such as querying for specific information, updating data, managing database structures, and controlling access to the data.
+
+Relational databases are databases that organize data into one or more tables, where data types may be related to each other; these relationships help structure the data. Tables, which are akin to spreadsheets, consist of columns and rows, with columns representing the data's attributes and rows representing the data entries or records.
+
+Each table in a relational database has a unique key (often a primary key) identifying each row, and tables can be related to one another through foreign keys—a field in one table that uniquely identifies a row of another table. Relational databases are based on a branch of algebraic theory known as relational algebra, and they are managed through operations that manipulate the data and relationships between tables.
+
+Relational database management systems (RDBMS), such as MySQL, PostgreSQL, Oracle Database, and Microsoft SQL Server, use SQL (or variations thereof) to manage the data within these types of databases.
+
+
+4. PDO stands for PHP Data Objects, which is a database access layer providing a uniform method of access to multiple databases. It does not provide a database abstraction but it allows for a uniform way of accessing different types of databases. PDO allows developers to utilize a consistent object-oriented API for accessing databases, which can work with several different database systems without needing to write database-specific code. This means that the same PHP code for database operations can often be used for different types of databases, such as MySQL, PostgreSQL, and SQLite, with minimal changes. PDO provides methods for executing queries and fetching results, transaction handling, and error checking, all in a secure, efficient, and flexible manner.
+
+The use of prepared statements is one of the key benefits of PDO, which greatly improves the security of database operations. Prepared statements essentially separate SQL logic from the data values, which counters SQL Injection attacks—one of the common vulnerabilities in web applications where attackers can manipulate SQL queries to gain unauthorized access to the database. With prepared statements, placeholders are used in SQL statements instead of directly embedding user input. The database then handles these inputs as data, not as part of the SQL command, thus preventing any malicious SQL code from being executed. Additionally, prepared statements can improve performance because the database can optimize the execution plan for a query, knowing that the same logic will be used repeatedly with different inputs.
