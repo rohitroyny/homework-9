@@ -44,22 +44,20 @@ class PostController
         $postModel = new Post(); 
         header("Content-Type: application/json");
         if ($id) {
-            //TODO 5-c i: get a post data by id
             $posts = $postModel->getPostById($id); 
         } else {
-            //TODO 5-a: get all posts
             $posts = $postModel->getAllPosts(); 
         }
-
         echo json_encode($posts);
         exit();
     }
 
-@@ -58,8 +59,13 @@ public function savePost() {
+    public function savePost() {
+        $inputData = [
+            'title' => $_POST['title'] ? $_POST['title'] : false,
+            'description' => $_POST['description'] ? $_POST['description'] : false,
         ];
         $postData = $this->validatePost($inputData);
-
-        //TODO 5-b: save a post
 
         $post = new Post(); 
         $post->savePost(
@@ -71,15 +69,22 @@ class PostController
         http_response_code(200);
         echo json_encode([
             'success' => true
-@@ -72,7 +78,6 @@ public function updatePost($id) {
+        ]);
+        exit();
+    }
+
+    public function updatePost($id) {
+        if (!$id) {
             http_response_code(404);
             exit();
         }
-
         //no built-in super global for PUT
         parse_str(file_get_contents('php://input'), $_PUT);
 
-@@ -83,6 +88,14 @@ public function updatePost($id) {
+        $inputData = [
+            'title' => $_PUT['title'] ? $_PUT['title'] : false,
+            'description' => $_PUT['description'] ? $_PUT['description'] : false,
+        ];
         $postData = $this->validatePost($inputData);
 
         //TODO 5-c: update a post
@@ -94,7 +99,15 @@ class PostController
 
         http_response_code(200);
         echo json_encode([
-@@ -98,6 +111,12 @@ public function deletePost($id) {
+            'success' => true
+        ]);
+        exit();
+    }
+
+    public function deletePost($id) {
+        if (!$id) {
+            http_response_code(404);
+            exit();
         }
 
         //TODO 5-d: delete a post
@@ -107,12 +120,30 @@ class PostController
 
         http_response_code(200);
         echo json_encode([
-@@ -121,7 +140,7 @@ public function postsDeleteView() {
+            'success' => true
+        ]);
         exit();
     }
 
-    public function postsUpdateView() {
+    public function postsView() {
+        include '../public/assets/views/post/posts-view.html';
+        exit();
+    }
+
+    public function postsAddView() {
+        include '../public/assets/views/post/posts-add.html';
+        exit();
+    }
+
+    public function postsDeleteView() {
+        include '../public/assets/views/post/posts-delete.html';
+        exit();
+    }
+
     public function postsUpdateView() { 
         include '../public/assets/views/post/posts-update.html';
         exit();
     }
+
+
+}
